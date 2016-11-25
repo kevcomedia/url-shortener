@@ -1,0 +1,22 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "URL shortener project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevcomedia/url-shortener.git"
+  },
+  "author": "Kev Comedia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevcomedia/url-shortener/issues"
+  },
+  "homepage": "https://github.com/kevcomedia/url-shortener#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

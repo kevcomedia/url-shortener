@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const UrlSchema = new mongoose.Schema({
   original: {
     type: String,
+    match: /^https?:\/\/.+/,
     required: true
   },
   shortened: {

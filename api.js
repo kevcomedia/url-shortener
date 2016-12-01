@@ -11,40 +11,42 @@ module.exports = function(models) {
     const original = /https?:\/\/.+/.exec(req.url)[0];
 
     const query = { original: original };
-    const projection = { original: 1, shortened: 1, _id: 0 };
-    models.Url.findOne(query, projection, function(err, doc) {
+    models.Url.findOne(query, function(err, doc) {
       if (err) {
         console.error(`Error finding doc with original URL '${original}'`);
         throw err;
       }
 
-      if (!doc) {
-        models.Url.count({}, function(err, count) {
-          if (err) {
-            console.error('Error counting docs');
-            throw err;
-          }
-
-          const newUrl = {
-            original: original,
-            shortened: (count + 1).toString(36)
-          };
-          models.Url.create(newUrl, function(err, doc) {
-            if (err) {
-              console.error('Error creating new doc');
-              throw err;
-            }
-
-            res.json(Object.assign({}, newUrl, { shortened: `${req.hostname}/${newUrl.shortened}` }));
-          });
-        });
-      }
-      else {
+      if (doc) {
         res.json({
           original: doc.original,
           shortened: `${req.hostname}/${doc.shortened}`
         });
+        return;
       }
+
+      models.Url.count({}, function(err, count) {
+        if (err) {
+          console.error('Error counting docs');
+          throw err;
+        }
+
+        const newUrl = {
+          original: original,
+          shortened: (count + 1).toString(36)
+        };
+        models.Url.create(newUrl, function(err, doc) {
+          if (err) {
+            console.error('Error creating new doc');
+            throw err;
+          }
+
+          res.json({
+            original: doc.original,
+            shortened: `${req.hostname}/${doc.shortened}`
+          });
+        });
+      });
     });
   });
 

@@ -38,7 +38,7 @@ describe('URL Shortener API', function() {
       assert.isOk(result);
       expect(result).to.deep.equal({
         original: original,
-        shortened: 'localhost/1'
+        shortened: 'https://localhost/1'
       });
       done();
     });
@@ -60,7 +60,7 @@ describe('URL Shortener API', function() {
         assert.isOk(result);
         expect(result).to.deep.equal({
           original: original,
-          shortened: 'localhost/1'
+          shortened: 'https://localhost/1'
         });
         done();
       });
@@ -78,7 +78,7 @@ describe('URL Shortener API', function() {
       assert.ok(result);
       expect(result).to.deep.equal({
         original: original,
-        shortened: 'localhost/1'
+        shortened: 'https://localhost/1'
       });
       done();
     });

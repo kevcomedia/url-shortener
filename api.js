@@ -20,7 +20,7 @@ module.exports = function(models) {
       if (doc) {
         res.json({
           original: doc.original,
-          shortened: `${req.hostname}/${doc.shortened}`
+          shortened: `https://${req.hostname}/${doc.shortened}`
         });
         return;
       }
@@ -43,7 +43,7 @@ module.exports = function(models) {
 
           res.json({
             original: doc.original,
-            shortened: `${req.hostname}/${doc.shortened}`
+            shortened: `https://${req.hostname}/${doc.shortened}`
           });
         });
       });

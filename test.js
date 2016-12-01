@@ -36,8 +36,10 @@ describe('URL Shortener API', function() {
         result = JSON.parse(res.text);
       });
       assert.isOk(result);
-      expect(result.original).to.equal(original);
-      expect(result.shortened).to.equal('localhost/1');
+      expect(result).to.deep.equal({
+        original: original,
+        shortened: 'localhost/1'
+      });
       done();
     });
   });
@@ -56,7 +58,10 @@ describe('URL Shortener API', function() {
           result = JSON.parse(res.text);
         });
         assert.isOk(result);
-        expect(result.shortened).to.equal('localhost/1');
+        expect(result).to.deep.equal({
+          original: original,
+          shortened: 'localhost/1'
+        });
         done();
       });
     });
@@ -71,8 +76,10 @@ describe('URL Shortener API', function() {
         result = JSON.parse(res.text);
       });
       assert.ok(result);
-      expect(result.original).to.equal(original);
-      expect(result.shortened).to.equal('localhost/1');
+      expect(result).to.deep.equal({
+        original: original,
+        shortened: 'localhost/1'
+      });
       done();
     });
   });
@@ -88,7 +95,9 @@ describe('URL Shortener API', function() {
           result = JSON.parse(res.text);
         });
         assert.isOk(result);
-        expect(result.error).to.equal('Your URL is invalid');
+        expect(result).to.deep.equal({
+          error: 'Your URL is invalid'
+        });
         done();
       }
     });
@@ -105,7 +114,9 @@ describe('URL Shortener API', function() {
           result = JSON.parse(res.text);
         });
         assert.isOk(result);
-        expect(result.error).to.equal('Not found');
+        expect(result).to.deep.equal({
+          error: 'Not found'
+        });
         done();
       }
     });

@@ -4,7 +4,7 @@ const app = express();
 app.use('/', require('./api')(require('./models')));
 
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.listen(8080, function() {

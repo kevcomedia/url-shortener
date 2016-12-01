@@ -5,14 +5,17 @@ const assert = require('chai').assert;
 
 describe('URL Shortener API', function() {
   var server;
+  var models;
   var Urls;
 
   before(function() {
     const app = express();
-    const models = require('./models');
+    models = require('./models');
     app.use(require('./api')(models));
 
-    server = app.listen(8081);
+    server = app.listen(8081).on('close', function() {
+      models.closeConnection();
+    });
     Urls = models.Url;
   });
 

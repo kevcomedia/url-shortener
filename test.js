@@ -10,7 +10,7 @@ describe('URL Shortener API', function() {
 
   before(function() {
     const app = express();
-    models = require('./models');
+    models = require('./models')('mongodb://localhost:27017/test');
     app.use(require('./api')(models));
 
     server = app.listen(8081).on('close', function() {

@@ -1,0 +1,32 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "URL shortener project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src",
+    "test": "mocha src/test.js",
+    "watch": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevcomedia/url-shortener.git"
+  },
+  "author": "Kev Comedia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevcomedia/url-shortener/issues"
+  },
+  "homepage": "https://github.com/kevcomedia/url-shortener#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "mocha": "^3.2.0",
+    "superagent": "^3.1.0"
+  }
+}

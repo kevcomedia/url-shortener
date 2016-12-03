@@ -1,27 +1,29 @@
-const express = require('express');
-
 module.exports = function(models) {
-  const api = express.Router();
+  const api = require('express').Router();
 
   /*
     Stores a new URL to the database, and returns a shortened URL.
     If the URL is already stored, just look it up and return. 
    */
   api.get(/^\/new\/https?:\/\/.+/, function(req, res) {
-    const original = /https?:\/\/.+/.exec(req.url)[0];
+    function respondWithShortened(doc) {
+      res.json({
+        original: doc.original,
+        shortened: `https://${req.hostname}/${doc.shortened}`
+      });
+    }
 
-    const query = { original: original };
-    models.Url.findOne(query, function(err, doc) {
+    const original = /https?:\/\/.+/.exec(req.url)[0];
+    models.Url.findOne({
+      original: original
+    }, function(err, doc) {
       if (err) {
         console.error(`Error finding doc with original URL '${original}'`);
         throw err;
       }
 
       if (doc) {
-        res.json({
-          original: doc.original,
-          shortened: `https://${req.hostname}/${doc.shortened}`
-        });
+        respondWithShortened(doc);
         return;
       }
 
@@ -41,10 +43,7 @@ module.exports = function(models) {
             throw err;
           }
 
-          res.json({
-            original: doc.original,
-            shortened: `https://${req.hostname}/${doc.shortened}`
-          });
+          respondWithShortened(doc);
         });
       });
     });
@@ -54,20 +53,30 @@ module.exports = function(models) {
     Returns an error message if `/new/` is followed by anything else.
    */
   api.get('/new/*', function(req, res) {
-    res.status(400).json({ error: 'Your URL is invalid' });
+    res.status(400).json({
+      error: 'Your URL is invalid'
+    });
   });
 
   /*
     Looks up the shortened URL in the database and redirects to the original if found.
    */
   api.get('/:shortened', function(req, res) {
-    models.Url.findOne({ shortened: req.params.shortened }, function(err, url) {
-      if (err) throw err;
-      if (url) {
-        res.redirect(302, url.original);
+    models.Url.findOne({
+      shortened: req.params.shortened
+    }, function(err, doc) {
+      if (err) {
+        console.error(`Error finding doc with shortened URL '${req.params.shortened}'`);
+        throw err;
+      }
+
+      if (doc) {
+        res.redirect(302, doc.original);
       }
       else {
-        res.status(404).json({ error: 'Not found' });
+        res.status(404).json({
+          error: 'Not found'
+        });
       }
     });
   });

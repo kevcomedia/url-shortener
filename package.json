@@ -4,7 +4,9 @@
   "description": "URL shortener project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "start": "node src",
+    "test": "mocha src/test.js",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",

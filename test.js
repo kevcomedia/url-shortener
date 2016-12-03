@@ -16,7 +16,7 @@ describe('URL Shortener API', function() {
     server = app.listen(8081).on('close', function() {
       models.closeConnection();
     });
-    Urls = models.Url;
+    Urls = models.Urls;
   });
 
   after(function() {

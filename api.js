@@ -1,5 +1,6 @@
 module.exports = function(models) {
   const api = require('express').Router();
+  const Urls = models.Urls;
 
   /*
     Stores a new URL to the database, and returns a shortened URL.
@@ -14,7 +15,7 @@ module.exports = function(models) {
     }
 
     const original = /https?:\/\/.+/.exec(req.url)[0];
-    models.Url.findOne({
+    Urls.findOne({
       original: original
     }, function(err, doc) {
       if (err) {
@@ -27,7 +28,7 @@ module.exports = function(models) {
         return;
       }
 
-      models.Url.count({}, function(err, count) {
+      Urls.count({}, function(err, count) {
         if (err) {
           console.error('Error counting docs');
           throw err;
@@ -37,7 +38,7 @@ module.exports = function(models) {
           original: original,
           shortened: (count + 1).toString(36)
         };
-        models.Url.create(newUrl, function(err, doc) {
+        Urls.create(newUrl, function(err, doc) {
           if (err) {
             console.error('Error creating new doc');
             throw err;
@@ -62,7 +63,7 @@ module.exports = function(models) {
     Looks up the shortened URL in the database and redirects to the original if found.
    */
   api.get('/:shortened', function(req, res) {
-    models.Url.findOne({
+    Urls.findOne({
       shortened: req.params.shortened
     }, function(err, doc) {
       if (err) {

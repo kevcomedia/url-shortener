@@ -4,7 +4,7 @@ module.exports = function(dbUri) {
   mongoose.connect(dbUri);
 
   return {
-    Url: mongoose.model('Url', require('./url-schema')),
+    Urls: mongoose.model('Url', require('./url-schema'), 'urls'),
     closeConnection: function() {
       mongoose.connection.close();
     }
